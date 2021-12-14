@@ -54,10 +54,9 @@ printf 'Applico le patch...\n\n'
 if grep -q 'CMAKE_C_COMPILER_VERSION VERSION_GREATER_EQUAL 10' "$path/mentos/CMakeLists.txt"; then
 	warning 'Patch "GCC 10" già applicata'
 else
-
 	{
-		printf '\nif (CMAKE_C_COMPILER_VERSION VERSION_GREATER_EQUAL 10)'
-		printf '    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fcommon")'
+		printf '\nif (CMAKE_C_COMPILER_VERSION VERSION_GREATER_EQUAL 10)\n'
+		printf '    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fcommon")\n'
 		printf 'endif()\n'
 	} >> "$path/mentos/CMakeLists.txt"
 
