@@ -39,6 +39,7 @@ if [ ! -d $1 ]; then
 	exit 1
 fi
 
+# Recupero la path assoluta della path ricevuta come argomento
 path=$(realpath $1)
 
 # Controllo esistenza file CMakeLists.txt
