@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 BOLD=$(tput bold)
 NORMAL=$(tput sgr0)
@@ -8,7 +8,7 @@ YELLOW=$(tput setaf 3)
 
 error()
 {
-	printf '%s%sERRORE%s: %s\n' "${BOLD}" "${RED}" "${NORMAL}" "$1"
+	printf '\n%s%sERRORE%s: %s\n' "${BOLD}" "${RED}" "${NORMAL}" "$1"
 }
 
 warning()
@@ -69,6 +69,23 @@ if [ -f "$path/files/prog/more.c" ]; then
 	success 'Patch "more.c" applicata'
 else
 	warning 'Patch "more.c" già applicata'
+fi
+
+# Controllo che sia definito il campo project
+# Patch necessaria a risolvere un warning in fase di compilazione principalmente su Arch Linux
+line_number=$(grep -n 'cmake_minimum_required' "$path/CMakeLists.txt" | awk '{printf $1}' FS=":")
+
+if [ -z "${line_number// }" ]; then
+	error 'Il file CMakeLists.txt è stato manomesso e non può essere patchato'
+	exit 1
+else
+	if grep -q 'project' "$path/CMakeLists.txt"; then
+		warning 'Patch "project" già applicata'
+	else
+		((line_number++))
+		sed -i "$line_number i project(MentOs)" "$path/CMakeLists.txt"
+		success 'Patch "project" applicata'
+	fi
 fi
 
 printf '\n'
