@@ -10,7 +10,7 @@ Utils per il corretto funzionamento di MentOS versione 0.3
 
 2) Utilizza le varie utils fornite in base alle tue esigenze.
 
-## Utils disponibili:
+## Utils disponibili
 ### [patcher.sh](patcher.sh)
 Da dentro la cartella MentOS-utils eseguire il comando
 
