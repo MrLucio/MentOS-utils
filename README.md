@@ -14,4 +14,7 @@ Utils per il corretto funzionamento di MentOS versione 0.3
 ### [patcher.sh](patcher.sh)
 Da dentro la cartella MentOS-utils eseguire il comando
 
-`./patcher.sh [directory MentOS]`
+`./patcher.sh PATH [-sdl]`
+
+- PATH: La path del progetto MentOS
+- -sdl: Da utilizzare se si vuole applicare la patch "sdl"

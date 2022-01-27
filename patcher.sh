@@ -26,7 +26,7 @@ printf '\t %s%sMentOS%s %sPatcher%s\n\n' "${BOLD}" "${GREEN}" "${NORMAL}" "${BOL
 usage="$(basename "$0") [MentOS directory]"
 
 # Controllo validità argomenti
-if [ $# -ne 1 ]; then
+if [ $# -gt 2 ]; then
 	error 'Argomenti non validi'
 	printf '\nUtilizzo:\n\t%s\n' "$usage"
 	exit 1
@@ -85,6 +85,16 @@ else
 		((line_number++))
 		sed -i "$line_number i project(MentOs)" "$path/CMakeLists.txt"
 		success 'Patch "project" applicata'
+	fi
+fi
+
+if [[ $2 == "-sdl" ]]; then
+	line_number=$(grep -nx 'SET(EMULATOR_FLAGS ${EMULATOR_FLAGS} -sdl)' "$path/CMakeLists.txt" | awk '{printf $1}' FS=":")
+	if [ -z "${line_number// }" ]; then
+		warning 'Patch "sdl" già applicata'
+	else
+		sed -i "$line_number s/./#&/" "$path/CMakeLists.txt"
+		success 'Patch "sdl" applicata'
 	fi
 fi
 
